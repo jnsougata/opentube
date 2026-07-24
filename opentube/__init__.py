@@ -1,8 +1,8 @@
 """
-A simple wrapper for the Discord HTTP Interaction API, designed for serverless apps.
+Access YouTube Public Data without YouTubeAPI.
 """
 
-__title__ = "opentube"
+__title__ = "OpenTube"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present Sougata Jana"
 __author__ = "Sougata Jana"
