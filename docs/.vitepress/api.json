@@ -1,0 +1,556 @@
+{
+  "package": "opentube",
+  "modules": {
+    "opentube": {
+      "name": "opentube",
+      "docstring": "A simple wrapper for the Discord HTTP Interaction API, designed for serverless apps.",
+      "classes": {},
+      "functions": {}
+    },
+    "opentube.channel": {
+      "name": "opentube.channel",
+      "docstring": null,
+      "classes": {
+        "Channel": {
+          "name": "Channel",
+          "qualified_name": "opentube.channel.Channel",
+          "docstring": null,
+          "bases": [],
+          "properties": {
+            "id": {
+              "docstring": "Returns the unique id of the channel.\n\nReturns:\n    str: The unique id of the channel."
+            },
+            "name": {
+              "docstring": "Returns the name of the channel.\n\nReturns:\n    str: The name of the channel."
+            },
+            "description": {
+              "docstring": "Returns the description of the channel.\n\nReturns:\n    str: The description of the channel."
+            },
+            "subscribers": {
+              "docstring": "Returns the subscriber count of the channel.\n\nReturns:\n    str: The subscriber count of the channel."
+            },
+            "views": {
+              "docstring": "Returns the total number of views the channel got across all videos.\n\nReturns:\n    str: The total number of views the channel got across all videos."
+            },
+            "country": {
+              "docstring": "Returns the country of the channel if available.\n\nReturns:\n    str | None: The country of the channel if available."
+            },
+            "url": {
+              "docstring": "Returns the url of the channel.\n\nReturns:\n    str: The url of the channel."
+            },
+            "avatars": {
+              "docstring": "Returns the avatars of the channel in different resolutions.\n\nReturns:\n    List[Dict[str, Any]]: The avatars of the channel."
+            },
+            "banners": {
+              "docstring": "Returns the banners of the channel in different resolutions.\n\nReturns:\n    List[Dict[str, Any]]: The banners of the channel."
+            },
+            "rss_url": {
+              "docstring": "Returns the rss url of the channel.\n\nReturns:\n    str: The rss url of the channel."
+            },
+            "video_count": {
+              "docstring": "Returns the total number of videos uploaded in the channel.\n\nReturns:\n    int: The total number of videos uploaded in the channel."
+            },
+            "custom_url": {
+              "docstring": "Returns the user created custom url of the channel.\n\nReturns:\n    str: The user created custom url of the channel."
+            },
+            "creation_date": {
+              "docstring": "Returns the date of creation of the channel.\n\nReturns:\n    str: The date of creation of the channel."
+            },
+            "socials": {
+              "docstring": "Returns the socials of the channel.\n\nReturns:\n    List[str]: The socials of the channel."
+            },
+            "keywords": {
+              "docstring": "Returns the keywords of the channel.\n\nReturns:\n    List[str]: The keywords of the channel."
+            },
+            "family_safe": {
+              "docstring": "Returns whether the channel is marked as family safe.\n\nReturns:\n    bool: True if the channel is marked as family safe, False otherwise."
+            },
+            "available_country_codes": {
+              "docstring": "Returns the list of country codes where the channel is available.\n\nReturns:\n    List[str]: The list of country codes where the channel is available"
+            },
+            "verified": {
+              "docstring": "Returns whether the channel is verified by YouTube.\n\nReturns:\n    bool: True if the channel is verified, False otherwise"
+            },
+            "live": {
+              "docstring": "Returns whether the channel is currently livestreaming.\n\nReturns:\n    bool: True if the channel is currently livestreaming, False otherwise."
+            },
+            "metadata": {
+              "docstring": "Returns channel metadata in a python dictionary format.\n\nReturns:\n    Dict: Channel metadata containing the keys like id, name, subscribers, views, country, custom_url, avatar, banner, url, description, socials etc."
+            },
+            "streaming_now": {
+              "docstring": "Fetches the ids of all ongoing livestreams.\n\nReturns:\n    List[str] | None: The ids of all ongoing streams or None."
+            },
+            "old_streams": {
+              "docstring": "Fetches the ids of all old or completed livestreams.\n\nReturns:\n    List[str] | None: The ids of all old or completed streams or None."
+            },
+            "last_streamed": {
+              "docstring": "Fetches the id of the last completed livestream.\n\nReturns:\n    str | None: The id of the last livestreamed video or None."
+            },
+            "last_uploaded": {
+              "docstring": "Fetches the id of the last uploaded video.\n\nReturns:\n    Dict[str, Any] | None: The id of the last uploaded video or None."
+            },
+            "upcoming": {
+              "docstring": "Fetches the upcoming scheduled videos.\n\nReturns:\n    List[str] | None: The ids of upcoming scheduled videos or None."
+            }
+          },
+          "methods": {
+            "shorts": {
+              "signature": "(self) -> Dict[str, Any] | None",
+              "async": false,
+              "docstring": "Fetches uploaded shorts and their basic metadata.\n\nReturns:\n    Dict[str, Any] | None: A dict containing basic metadata of uploaded shorts or None."
+            },
+            "videos": {
+              "signature": "(self) -> Dict[str, Any] | None",
+              "async": false,
+              "docstring": "Fetches upto 30 uploaded videos and their basic metadata.\n\nReturns:\n    Dict[str, Any] | None: A dict containing basic metadata of uploaded videos or None."
+            },
+            "playlists": {
+              "signature": "(self) -> List[Dict[str, Any]] | None",
+              "async": false,
+              "docstring": "Fetches the basic metadata of some public playlists.\n\nReturns:\n    List[Dict[str, Any]] | None: The basic metadata of all playlists or None."
+            }
+          }
+        }
+      },
+      "functions": {}
+    },
+    "opentube.errors": {
+      "name": "opentube.errors",
+      "docstring": null,
+      "classes": {
+        "InvalidURL": {
+          "name": "InvalidURL",
+          "qualified_name": "opentube.errors.InvalidURL",
+          "docstring": "Common base class for all non-exit exceptions.",
+          "bases": [
+            "builtins.Exception"
+          ],
+          "properties": {},
+          "methods": {}
+        },
+        "RequestError": {
+          "name": "RequestError",
+          "qualified_name": "opentube.errors.RequestError",
+          "docstring": "Common base class for all non-exit exceptions.",
+          "bases": [
+            "builtins.Exception"
+          ],
+          "properties": {},
+          "methods": {}
+        },
+        "TooManyRequests": {
+          "name": "TooManyRequests",
+          "qualified_name": "opentube.errors.TooManyRequests",
+          "docstring": "Common base class for all non-exit exceptions.",
+          "bases": [
+            "builtins.Exception"
+          ],
+          "properties": {},
+          "methods": {}
+        }
+      },
+      "functions": {}
+    },
+    "opentube.extras": {
+      "name": "opentube.extras",
+      "docstring": null,
+      "classes": {
+        "Extras": {
+          "name": "Extras",
+          "qualified_name": "opentube.extras.Extras",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {
+            "trending_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "music_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "gaming_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "news_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "live_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "educational_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "sport_videos": {
+              "signature": "() -> List[str] | None",
+              "async": false,
+              "docstring": null
+            }
+          }
+        }
+      },
+      "functions": {}
+    },
+    "opentube.https": {
+      "name": "opentube.https",
+      "docstring": null,
+      "classes": {},
+      "functions": {
+        "_get_trending_learning_videos": {
+          "name": "_get_trending_learning_videos",
+          "qualified_name": "opentube.https._get_trending_learning_videos",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "channel_about": {
+          "name": "channel_about",
+          "qualified_name": "opentube.https.channel_about",
+          "signature": "(head: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "channel_playlists": {
+          "name": "channel_playlists",
+          "qualified_name": "opentube.https.channel_playlists",
+          "signature": "(head: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "find_channels": {
+          "name": "find_channels",
+          "qualified_name": "opentube.https.find_channels",
+          "signature": "(query: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "find_playlists": {
+          "name": "find_playlists",
+          "qualified_name": "opentube.https.find_playlists",
+          "signature": "(query: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "find_videos": {
+          "name": "find_videos",
+          "qualified_name": "opentube.https.find_videos",
+          "signature": "(query: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "playlist_data": {
+          "name": "playlist_data",
+          "qualified_name": "opentube.https.playlist_data",
+          "signature": "(playlist_id: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "shorts_data": {
+          "name": "shorts_data",
+          "qualified_name": "opentube.https.shorts_data",
+          "signature": "(head: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "streams_data": {
+          "name": "streams_data",
+          "qualified_name": "opentube.https.streams_data",
+          "signature": "(head: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "trending_feeds": {
+          "name": "trending_feeds",
+          "qualified_name": "opentube.https.trending_feeds",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "trending_games": {
+          "name": "trending_games",
+          "qualified_name": "opentube.https.trending_games",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "trending_songs": {
+          "name": "trending_songs",
+          "qualified_name": "opentube.https.trending_songs",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "trending_sports": {
+          "name": "trending_sports",
+          "qualified_name": "opentube.https.trending_sports",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "trending_streams": {
+          "name": "trending_streams",
+          "qualified_name": "opentube.https.trending_streams",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "trending_videos": {
+          "name": "trending_videos",
+          "qualified_name": "opentube.https.trending_videos",
+          "signature": "() -> str",
+          "async": false,
+          "docstring": null
+        },
+        "upcoming_videos": {
+          "name": "upcoming_videos",
+          "qualified_name": "opentube.https.upcoming_videos",
+          "signature": "(head: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "uploads_data": {
+          "name": "uploads_data",
+          "qualified_name": "opentube.https.uploads_data",
+          "signature": "(head: str) -> str",
+          "async": false,
+          "docstring": null
+        },
+        "video_data": {
+          "name": "video_data",
+          "qualified_name": "opentube.https.video_data",
+          "signature": "(video_id: str) -> str",
+          "async": false,
+          "docstring": null
+        }
+      }
+    },
+    "opentube.patterns": {
+      "name": "opentube.patterns",
+      "docstring": null,
+      "classes": {
+        "_ChannelPatterns": {
+          "name": "_ChannelPatterns",
+          "qualified_name": "opentube.patterns._ChannelPatterns",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {}
+        },
+        "_ExtraPatterns": {
+          "name": "_ExtraPatterns",
+          "qualified_name": "opentube.patterns._ExtraPatterns",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {}
+        },
+        "_PlaylistPatterns": {
+          "name": "_PlaylistPatterns",
+          "qualified_name": "opentube.patterns._PlaylistPatterns",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {}
+        },
+        "_QueryPatterns": {
+          "name": "_QueryPatterns",
+          "qualified_name": "opentube.patterns._QueryPatterns",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {}
+        },
+        "_VideoPatterns": {
+          "name": "_VideoPatterns",
+          "qualified_name": "opentube.patterns._VideoPatterns",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {}
+        }
+      },
+      "functions": {}
+    },
+    "opentube.playlist": {
+      "name": "opentube.playlist",
+      "docstring": null,
+      "classes": {
+        "Playlist": {
+          "name": "Playlist",
+          "qualified_name": "opentube.playlist.Playlist",
+          "docstring": null,
+          "bases": [],
+          "properties": {
+            "metadata": {
+              "docstring": "Fetches playlist metadata in a dict format\n\nReturns\n-------\nDict\n    Playlist metadata in a dict format containing keys: id, url, name, video_count, thumbnail,"
+            }
+          },
+          "methods": {}
+        }
+      },
+      "functions": {}
+    },
+    "opentube.pool": {
+      "name": "opentube.pool",
+      "docstring": null,
+      "classes": {},
+      "functions": {
+        "collect": {
+          "name": "collect",
+          "qualified_name": "opentube.pool.collect",
+          "signature": "(func: Callable, args: List[Any]) -> List[Any]",
+          "async": false,
+          "docstring": null
+        }
+      }
+    },
+    "opentube.query": {
+      "name": "opentube.query",
+      "docstring": null,
+      "classes": {
+        "Search": {
+          "name": "Search",
+          "qualified_name": "opentube.query.Search",
+          "docstring": null,
+          "bases": [],
+          "properties": {},
+          "methods": {
+            "video": {
+              "signature": "(keywords: str) -> opentube.video.Video | None",
+              "async": false,
+              "docstring": null
+            },
+            "channel": {
+              "signature": "(keywords: str) -> opentube.channel.Channel | None",
+              "async": false,
+              "docstring": null
+            },
+            "playlist": {
+              "signature": "(keywords: str) -> opentube.playlist.Playlist | None",
+              "async": false,
+              "docstring": null
+            },
+            "videos": {
+              "signature": "(keywords: str, limit: int = 20) -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "channels": {
+              "signature": "(keywords: str, limit: int = 20) -> List[str] | None",
+              "async": false,
+              "docstring": null
+            },
+            "playlists": {
+              "signature": "(keywords: str, limit: int = 20) -> List[str] | None",
+              "async": false,
+              "docstring": null
+            }
+          }
+        }
+      },
+      "functions": {}
+    },
+    "opentube.stream": {
+      "name": "opentube.stream",
+      "docstring": null,
+      "classes": {
+        "Video": {
+          "name": "Video",
+          "qualified_name": "opentube.stream.Video",
+          "docstring": null,
+          "bases": [],
+          "properties": {
+            "metadata": {
+              "docstring": null
+            }
+          },
+          "methods": {}
+        }
+      },
+      "functions": {}
+    },
+    "opentube.utils": {
+      "name": "opentube.utils",
+      "docstring": null,
+      "classes": {},
+      "functions": {
+        "dup_filter": {
+          "name": "dup_filter",
+          "qualified_name": "opentube.utils.dup_filter",
+          "signature": "(iterable: list, limit: int = None) -> list",
+          "async": false,
+          "docstring": null
+        },
+        "extract_initial_data": {
+          "name": "extract_initial_data",
+          "qualified_name": "opentube.utils.extract_initial_data",
+          "signature": "(html: str) -> Any",
+          "async": false,
+          "docstring": null
+        },
+        "request": {
+          "name": "request",
+          "qualified_name": "opentube.utils.request",
+          "signature": "(url: str) -> str",
+          "async": false,
+          "docstring": null
+        }
+      }
+    },
+    "opentube.video": {
+      "name": "opentube.video",
+      "docstring": null,
+      "classes": {
+        "Video": {
+          "name": "Video",
+          "qualified_name": "opentube.video.Video",
+          "docstring": null,
+          "bases": [],
+          "properties": {
+            "metadata": {
+              "docstring": "Fetches video metadata in a dict format\n\nReturns\n-------\nDict\n    Video metadata in a dict format containing keys: title, id, views, duration, author_id,\n    upload_date, url, thumbnails, tags, description"
+            }
+          },
+          "methods": {}
+        },
+        "_EngagementPanelType": {
+          "name": "_EngagementPanelType",
+          "qualified_name": "opentube.video._EngagementPanelType",
+          "docstring": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details.",
+          "bases": [
+            "enum.Enum"
+          ],
+          "properties": {},
+          "methods": {}
+        }
+      },
+      "functions": {
+        "find_engagement_panel": {
+          "name": "find_engagement_panel",
+          "qualified_name": "opentube.video.find_engagement_panel",
+          "signature": "(data: Dict[str, Any], panel_type_id: str) -> Dict[str, Any]",
+          "async": false,
+          "docstring": null
+        }
+      }
+    }
+  },
+  "summary": {
+    "modules": 12,
+    "classes": 15,
+    "functions": 23,
+    "methods": 16,
+    "properties": 28
+  }
+}
