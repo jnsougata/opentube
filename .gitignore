@@ -131,5 +131,4 @@ dmypy.json
 src/testing/
 src/aiotube.egg-info/
 main.py
-*.json
 node_modules/
