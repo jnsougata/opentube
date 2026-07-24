@@ -121,7 +121,7 @@
         "InvalidURL": {
           "name": "InvalidURL",
           "qualified_name": "opentube.errors.InvalidURL",
-          "docstring": "Common base class for all non-exit exceptions.",
+          "docstring": "When invalid URL is provided.",
           "bases": [
             "builtins.Exception"
           ],
@@ -131,7 +131,7 @@
         "RequestError": {
           "name": "RequestError",
           "qualified_name": "opentube.errors.RequestError",
-          "docstring": "Common base class for all non-exit exceptions.",
+          "docstring": "When an error occurs while making a request.",
           "bases": [
             "builtins.Exception"
           ],
@@ -141,7 +141,7 @@
         "TooManyRequests": {
           "name": "TooManyRequests",
           "qualified_name": "opentube.errors.TooManyRequests",
-          "docstring": "Common base class for all non-exit exceptions.",
+          "docstring": "When too many requests are made to the YouTube API in a short period of time.",
           "bases": [
             "builtins.Exception"
           ],
@@ -488,23 +488,23 @@
         "dup_filter": {
           "name": "dup_filter",
           "qualified_name": "opentube.utils.dup_filter",
-          "signature": "(iterable: list, limit: int = None) -> list",
+          "signature": "(iterable: list, limit: int | None = None) -> List[Any]",
           "async": false,
-          "docstring": null
+          "docstring": "Utility function for filtering out duplicate items.\n\nArgs:\n    iterable (list): The list of items to filter.\n    limit (Optional[int]): The maximum number of items to return."
         },
         "extract_initial_data": {
           "name": "extract_initial_data",
           "qualified_name": "opentube.utils.extract_initial_data",
           "signature": "(html: str) -> Any",
           "async": false,
-          "docstring": null
+          "docstring": "Utility function for extracting the initial data from the HTML of a YouTube page.\n\nArgs:\n    html (str): The HTML of the YouTube page."
         },
         "request": {
           "name": "request",
           "qualified_name": "opentube.utils.request",
-          "signature": "(url: str) -> str",
+          "signature": "(url: str) -> Any | None",
           "async": false,
-          "docstring": null
+          "docstring": "The base function for making a request with proper headers.\n\nArgs:\n    url (str): The url to make a request."
         }
       }
     },

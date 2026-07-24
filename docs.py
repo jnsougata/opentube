@@ -10,7 +10,7 @@ with open("opentube/__init__.py") as f:
 if __name__ == '__main__':
     vitedoc.init(
         base_dir="docs",
-        title="opentube",
+        title="OpenTube",
         description="Access YouTube Public Data without YouTubeAPI.",
         actions=[
             Action(

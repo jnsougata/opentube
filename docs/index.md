@@ -1,11 +1,11 @@
 ---
 layout: home
 hero:
-  name: opentube
+  name: OpenTube
   tagline: Access YouTube Public Data without YouTubeAPI.
   image:
     src: /logo.png
-    alt: opentube logo
+    alt: OpenTube logo
   actions:
   - theme: brand
     text: Get started

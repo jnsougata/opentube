@@ -2,7 +2,7 @@ import { defineConfig } from "vitepress";
 
 export default defineConfig({
     base: "/opentube/",
-    title: "opentube",
+    title: "OpenTube",
     description: "Access YouTube Public Data without YouTubeAPI.",
     cleanUrls: true,
 

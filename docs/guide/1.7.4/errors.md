@@ -15,7 +15,7 @@ title: opentube.errors
 
 `opentube.errors.InvalidURL`
 
-Common base class for all non-exit exceptions.
+When invalid URL is provided.
 
 ### Inheritance
 
@@ -27,7 +27,7 @@ Common base class for all non-exit exceptions.
 
 `opentube.errors.RequestError`
 
-Common base class for all non-exit exceptions.
+When an error occurs while making a request.
 
 ### Inheritance
 
@@ -39,7 +39,7 @@ Common base class for all non-exit exceptions.
 
 `opentube.errors.TooManyRequests`
 
-Common base class for all non-exit exceptions.
+When too many requests are made to the YouTube API in a short period of time.
 
 ### Inheritance
 
