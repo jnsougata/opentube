@@ -4,10 +4,14 @@ from setuptools import setup
 with open('README.md') as f:
     readme = f.read()
 
+version = ""
+with open("opentube/__init__.py") as f:
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)  # type: ignore
+
 
 setup(
     name='opentube',
-    version='1.7.4',
+    version=version,
     description='Access YouTube Public Data without YouTubeAPI',
     long_description=readme,
     long_description_content_type="text/markdown",
