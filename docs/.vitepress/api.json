@@ -3,7 +3,7 @@
   "modules": {
     "opentube": {
       "name": "opentube",
-      "docstring": "A simple wrapper for the Discord HTTP Interaction API, designed for serverless apps.",
+      "docstring": "Access YouTube Public Data without YouTubeAPI.",
       "classes": {},
       "functions": {}
     },
@@ -518,6 +518,15 @@
           "docstring": null,
           "bases": [],
           "properties": {
+            "url": {
+              "docstring": "Returns the url of the video.\n\nReturns:\n    str: Url of the video."
+            },
+            "title": {
+              "docstring": "Returns the title of the video.\n\nReturns:\n    str: Title of the video."
+            },
+            "description": {
+              "docstring": "Returns the description of the video.\n\nReturns:\n    str: Description of the video."
+            },
             "metadata": {
               "docstring": "Fetches video metadata in a dict format\n\nReturns\n-------\nDict\n    Video metadata in a dict format containing keys: title, id, views, duration, author_id,\n    upload_date, url, thumbnails, tags, description"
             }
@@ -551,6 +560,6 @@
     "classes": 15,
     "functions": 23,
     "methods": 16,
-    "properties": 28
+    "properties": 31
   }
 }

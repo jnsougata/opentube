@@ -16,9 +16,21 @@ title: opentube.video
 
 ### Property Index
 
+- [description](#video-description)
 - [metadata](#video-metadata)
+- [title](#video-title)
+- [url](#video-url)
 
 ### Properties
+
+<a id="video-description"></a>
+#### `description`
+
+Returns the description of the video.
+#### _Returns_
+
+- **Type:** `str`
+  - Description of the video.
 
 <a id="video-metadata"></a>
 #### `metadata`
@@ -29,6 +41,24 @@ Returns
 Dict
 Video metadata in a dict format containing keys: title, id, views, duration, author_id,
 upload_date, url, thumbnails, tags, description
+
+<a id="video-title"></a>
+#### `title`
+
+Returns the title of the video.
+#### _Returns_
+
+- **Type:** `str`
+  - Title of the video.
+
+<a id="video-url"></a>
+#### `url`
+
+Returns the url of the video.
+#### _Returns_
+
+- **Type:** `str`
+  - Url of the video.
 
 
 <a id="class--engagementpaneltype"></a>
