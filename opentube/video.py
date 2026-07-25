@@ -1,7 +1,7 @@
 import re
 
 from .https import video_data
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from enum import Enum
 
 from .utils import extract_initial_data
@@ -24,12 +24,10 @@ class Video:
 
     def __init__(self, video_id: str):
         """
-        Represents a YouTube video
+        Represents a YouTube video.
 
-        Parameters
-        ----------
-        video_id : str
-            The id or url of the video
+        args:
+            video_id (str): The id or url of the video.
         """
         pattern = re.compile(r".be/(.*?)$|=(.*?)$|^(\w{11})$")
         self._matched_id = (
@@ -42,15 +40,50 @@ class Video:
             self._video_data = (
                 extract_initial_data(video_data(self._matched_id))
             )
-            import json
-
-            with open("video_data.json", "w") as f:
-                f.write(json.dumps(self._video_data, indent=4))
+            self._info_section = self._video_data["contents"]["twoColumnWatchNextResults"]["results"]["results"]["contents"]
         else:
-            raise ValueError("invalid video id or url")
+            raise ValueError("Invalid video id or url.")
 
     def __repr__(self):
         return f"<Video {self._url}>"
+
+    @property
+    def url(self) -> str:
+        """
+        Returns the url of the video.
+
+        Returns:
+            str: Url of the video.
+        """
+        return self._url
+
+    @property
+    def title(self) -> Optional[str]:
+        """
+        Returns the title of the video.
+
+        Returns:
+            str: Title of the video.
+        """
+        for section in self._info_section:
+            info = section.get("videoPrimaryInfoRenderer")
+            if info:
+                return info.get("title", {}).get("runs", [{}])[0].get("text", "")
+        return None
+
+    @property
+    def description(self) -> Optional[str]:
+        """
+        Returns the description of the video.
+
+        Returns:
+            str: Description of the video.
+        """
+        for section in self._info_section:
+            info = section.get("videoSecondaryInfoRenderer")
+            if info:
+                return info.get("attributedDescription", {}).get("content")
+        return None
 
     @property
     def metadata(self) -> Dict[str, Any]:
