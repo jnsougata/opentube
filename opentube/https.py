@@ -1,4 +1,5 @@
 from urllib.parse import quote
+
 from .utils import request
 
 
@@ -8,6 +9,7 @@ def channel_about(head: str) -> str:
 
 def uploads_data(head: str) -> str:
     return request(f"{head}/videos")
+
 
 def shorts_data(head: str) -> str:
     return request(f"{head}/shorts")

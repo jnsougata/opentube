@@ -527,39 +527,48 @@
             "description": {
               "docstring": "Returns the description of the video.\n\nReturns:\n    str: Description of the video."
             },
-            "metadata": {
-              "docstring": "Fetches video metadata in a dict format\n\nReturns\n-------\nDict\n    Video metadata in a dict format containing keys: title, id, views, duration, author_id,\n    upload_date, url, thumbnails, tags, description"
+            "thumbnail": {
+              "docstring": "Returns the thumbnail of the video.\n\nReturns:\n    str: Thumbnail of the video."
+            },
+            "views": {
+              "docstring": "Returns the view count of the video.\n\nReturns:\n    str: View count of the video."
+            },
+            "published": {
+              "docstring": "Returns the date of publication of the video.\n\nReturns:\n    str: Date of publication of the video."
+            },
+            "likes": {
+              "docstring": "Returns the likes count of the video.\n\nReturns:\n    str | None: Likes count of the video."
+            },
+            "owner": {
+              "docstring": "Returns the details such as, id, title, avatars, subscribers of the owner of the video.\n\nReturns:\n    Dict[str, Any]: Details of the owner."
+            },
+            "duration_ms": {
+              "docstring": "Returns the approximate duration of the video in milliseconds.\n\nReturns:\n    int: Duration of the video."
+            },
+            "genre": {
+              "docstring": "Returns the genre of the video.\n\nReturns:\n    str | None: Genre of the video."
+            },
+            "keywords": {
+              "docstring": "Returns the keywords of the video.\n\nReturns:\n    List[str] | None: Keywords of the video."
+            },
+            "livestream": {
+              "docstring": "Returns whether the video is a livestream or not.\n\nReturns:\n    bool: True if the video is a livestream, False otherwise."
+            },
+            "watermark": {
+              "docstring": "Returns the watermark image url of the video.\n\nReturns:\n    str | None: Watermark of the video."
             }
           },
           "methods": {}
-        },
-        "_EngagementPanelType": {
-          "name": "_EngagementPanelType",
-          "qualified_name": "opentube.video._EngagementPanelType",
-          "docstring": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details.",
-          "bases": [
-            "enum.Enum"
-          ],
-          "properties": {},
-          "methods": {}
         }
       },
-      "functions": {
-        "find_engagement_panel": {
-          "name": "find_engagement_panel",
-          "qualified_name": "opentube.video.find_engagement_panel",
-          "signature": "(data: Dict[str, Any], panel_type_id: str) -> Dict[str, Any]",
-          "async": false,
-          "docstring": null
-        }
-      }
+      "functions": {}
     }
   },
   "summary": {
     "modules": 12,
-    "classes": 15,
-    "functions": 23,
+    "classes": 14,
+    "functions": 22,
     "methods": 16,
-    "properties": 31
+    "properties": 40
   }
 }

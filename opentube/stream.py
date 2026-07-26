@@ -1,9 +1,9 @@
 import re
-from typing import Dict, Any
+from typing import Any, Dict
 
-from .pool import collect
 from .https import video_data
 from .patterns import _VideoPatterns as Patterns
+from .pool import collect
 
 
 class Video:

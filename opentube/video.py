@@ -1,21 +1,8 @@
 import re
+from typing import Any, Dict, List, Optional
 
 from .https import video_data
-from typing import Dict, Any, Optional
-from enum import Enum
-
 from .utils import extract_initial_data
-
-
-class _EngagementPanelType(Enum):
-    comments = "engagement-panel-comments-section"
-    description = "engagement-panel-structured-description"
-
-def find_engagement_panel(data: Dict[str, Any], panel_type_id: str) -> Dict[str, Any]:
-    for panel in data["engagementPanels"]:
-        if panel["engagementPanelSectionListRenderer"].get("panelIdentifier", "") == panel_type_id:
-            return panel["engagementPanelSectionListRenderer"]
-    return {}
 
 
 class Video:
@@ -37,10 +24,21 @@ class Video:
         )
         if self._matched_id:
             self._url = self._HEAD + self._matched_id
-            self._video_data = (
-                extract_initial_data(video_data(self._matched_id))
-            )
-            self._info_section = self._video_data["contents"]["twoColumnWatchNextResults"]["results"]["results"]["contents"]
+            self._raw_html = video_data(self._matched_id)
+            self._video_data = extract_initial_data(self._raw_html)
+            self._info_section = self._video_data["contents"][
+                "twoColumnWatchNextResults"
+            ]["results"]["results"]["contents"]
+            self._primary_info = None
+            self._secondary_info = None
+            for section in self._info_section:
+                _primary_info = section.get("videoPrimaryInfoRenderer")
+                if _primary_info:
+                    self._primary_info = _primary_info
+                _secondary_info = section.get("videoSecondaryInfoRenderer")
+                if _secondary_info:
+                    self._secondary_info = _secondary_info
+
         else:
             raise ValueError("Invalid video id or url.")
 
@@ -65,10 +63,10 @@ class Video:
         Returns:
             str: Title of the video.
         """
-        for section in self._info_section:
-            info = section.get("videoPrimaryInfoRenderer")
-            if info:
-                return info.get("title", {}).get("runs", [{}])[0].get("text", "")
+        if self._primary_info:
+            return (
+                self._primary_info.get("title", {}).get("runs", [{}])[0].get("text", "")
+            )
         return None
 
     @property
@@ -79,63 +77,152 @@ class Video:
         Returns:
             str: Description of the video.
         """
-        for section in self._info_section:
-            info = section.get("videoSecondaryInfoRenderer")
-            if info:
-                return info.get("attributedDescription", {}).get("content")
+        if self._secondary_info:
+            return self._secondary_info.get("attributedDescription", {}).get("content")
         return None
 
     @property
-    def metadata(self) -> Dict[str, Any]:
+    def thumbnail(self) -> str:
         """
-        Fetches video metadata in a dict format
+        Returns the thumbnail of the video.
 
-        Returns
-        -------
-        Dict
-            Video metadata in a dict format containing keys: title, id, views, duration, author_id,
-            upload_date, url, thumbnails, tags, description
+        Returns:
+            str: Thumbnail of the video.
         """
-        info_section = self._video_data["contents"]["twoColumnWatchNextResults"]["results"]["results"]["contents"]
-        primary_info = {}
-        secondary_info = {}
-        for section in info_section:
-            if section.get("videoPrimaryInfoRenderer"):
-                primary_info = section["videoPrimaryInfoRenderer"]
-            elif section.get("videoSecondaryInfoRenderer"):
-                secondary_info = section["videoSecondaryInfoRenderer"]
-        comments_section = find_engagement_panel(self._video_data, _EngagementPanelType.comments.value)
-        data = {
-            "title": primary_info["title"]["runs"][0]["text"],
-            "id": self._matched_id,
-            "views": primary_info["viewCount"]["videoViewCountRenderer"]["originalViewCount"],
-            "comments": (
-                comments_section["header"]["engagementPanelTitleHeaderRenderer"]["contextualInfo"]["runs"][0]["text"]
-                if comments_section
-                else None
-            ),
-            "likes": (
-                primary_info["videoActions"]["menuRenderer"]["topLevelButtons"][0]
-                ["segmentedLikeDislikeButtonViewModel"]["likeCountEntity"]["expandedLikeCountIfIndifferent"]["content"]
-            ),
-            "owner": {
-                "title": secondary_info["owner"]["videoOwnerRenderer"]["title"]["runs"][0]["text"],
-                "id": secondary_info["owner"]["videoOwnerRenderer"]["title"]["runs"][0]["navigationEndpoint"][
-                    "browseEndpoint"
-                ]["browseId"],
-                "avatars": secondary_info["owner"]["videoOwnerRenderer"]["thumbnail"]["thumbnails"],
-                "subscribers": secondary_info["owner"]["videoOwnerRenderer"]["subscriberCountText"]["simpleText"],
-            },
-            "published": primary_info["dateText"]["simpleText"],
-            "url": f"https://www.youtube.com/watch?v={self._matched_id}",
-            "thumbnail": f"https://i.ytimg.com/vi/{self._matched_id}/maxresdefault.jpg",
-            # "tags": metadata.get("keywords"), # agh! this is not available in the initial data
-            # "streamed": metadata["isLiveContent"], # agh! this is not available in the initial data
-            # "duration": metadata["lengthSeconds"], # agh! this is not available in the initial data
-            "description": secondary_info["attributedDescription"]["content"],
+        return f"https://i.ytimg.com/vi/{self._matched_id}/maxresdefault.jpg"
+
+    @property
+    def views(self) -> str:
+        """
+        Returns the view count of the video.
+
+        Returns:
+            str: View count of the video.
+        """
+        return (
+            (
+                self._primary_info["viewCount"]["videoViewCountRenderer"]["viewCount"][
+                    "simpleText"
+                ]
+            )
+            .replace("views", "")
+            .replace(",", "")
+            .strip()
+        )
+
+    @property
+    def published(self) -> str:
+        """
+        Returns the date of publication of the video.
+
+        Returns:
+            str: Date of publication of the video.
+        """
+        return self._primary_info["dateText"]["simpleText"]
+
+    @property
+    def likes(self) -> Optional[str]:
+        """
+        Returns the likes count of the video.
+
+        Returns:
+            str | None: Likes count of the video.
+        """
+        # YouTube is not consistent with the data structure for likes across all videos,
+        # so we have to use regex to extract it from the string representation of the data.
+        # It's a lot faster than traversing deeply nested JSON.
+        matched = re.search(
+            r"{'iconName': 'LIKE', 'title': (.*?),",
+            str(self._primary_info["videoActions"]),
+        )
+        if matched:
+            return matched.group(1).strip("'")
+        return None
+
+    @property
+    def owner(self) -> Optional[Dict[str, Any]]:
+        """
+        Returns the details such as, id, title, avatars, subscribers of the owner of the video.
+
+        Returns:
+            Dict[str, Any]: Details of the owner.
+        """
+        return {
+            "title": self._secondary_info["owner"]["videoOwnerRenderer"]["title"][
+                "runs"
+            ][0]["text"],
+            "id": self._secondary_info["owner"]["videoOwnerRenderer"]["title"]["runs"][
+                0
+            ]["navigationEndpoint"]["browseEndpoint"]["browseId"],
+            "avatars": self._secondary_info["owner"]["videoOwnerRenderer"]["thumbnail"][
+                "thumbnails"
+            ],
+            "subscribers": self._secondary_info["owner"]["videoOwnerRenderer"][
+                "subscriberCountText"
+            ]["simpleText"],
         }
-        # try:
-        #     data["genre"] = genre_pattern.search(self._video_data).group(1)
-        # except AttributeError:
-        #     data["genre"] = None
-        return data
+
+    @property
+    def duration_ms(self) -> int:
+        """
+        Returns the approximate duration of the video in milliseconds.
+
+        Returns:
+            int: Duration of the video.
+        """
+        matched = re.search(r"\"approxDurationMs\":(.*?),", self._raw_html)
+        return int(matched.group(1).strip('"'))  # noqa
+
+    @property
+    def genre(self) -> Optional[str]:
+        """
+        Returns the genre of the video.
+
+        Returns:
+            str | None: Genre of the video.
+        """
+        matched = re.search(r"<meta itemprop=\"genre\" content=(.*?)>", self._raw_html)
+        if matched:
+            return matched.group(1).strip('"')
+        return None
+
+    @property
+    def keywords(self) -> Optional[List[str]]:
+        """
+        Returns the keywords of the video.
+
+        Returns:
+            List[str] | None: Keywords of the video.
+        """
+        matched = re.search(r"<meta name=\"keywords\" content=(.*?)>", self._raw_html)
+        if matched:
+            return matched.group(1).strip('"').split(",")  # noqa
+        return None
+
+    @property
+    def livestream(self) -> bool:
+        """
+        Returns whether the video is a livestream or not.
+
+        Returns:
+            bool: True if the video is a livestream, False otherwise.
+        """
+        matched = re.search(r"\"isLiveContent\":(.*?),", self._raw_html)
+        if matched:
+            return matched.group(1).strip('"') == "true"
+        return False
+
+    @property
+    def watermark(self) -> Optional[str]:
+        """
+        Returns the watermark image url of the video.
+
+        Returns:
+            str | None: Watermark of the video.
+        """
+        matched = re.search(r"\"watermark\":(.*?),", self._raw_html)
+        if matched:
+            return json.loads(matched.group(1).strip('"') + '"}]}')["thumbnails"][0][
+                "url"
+            ]
+        return None

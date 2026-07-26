@@ -1,11 +1,11 @@
 import json
 import re
 from collections import OrderedDict
-from typing import Any, Optional, List
+from typing import Any, List, Optional
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from .errors import TooManyRequests, InvalidURL, RequestError
+from .errors import InvalidURL, RequestError, TooManyRequests
 
 __all__ = ["dup_filter", "request", "extract_initial_data"]
 

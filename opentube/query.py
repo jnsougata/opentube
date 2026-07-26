@@ -1,10 +1,11 @@
+from typing import Any, Dict, List, Optional
+
+from .channel import Channel
+from .https import find_channels, find_playlists, find_videos
+from .patterns import _QueryPatterns as Patterns
+from .playlist import Playlist
 from .utils import dup_filter
 from .video import Video
-from .channel import Channel
-from .playlist import Playlist
-from .patterns import _QueryPatterns as Patterns
-from typing import Optional, Dict, Any, List
-from .https import find_videos, find_channels, find_playlists
 
 
 class Search:

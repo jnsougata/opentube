@@ -132,3 +132,4 @@ src/testing/
 src/aiotube.egg-info/
 main.py
 node_modules/
+*.html

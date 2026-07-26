@@ -1,10 +1,10 @@
 import re
-from typing import Dict, Any
+from typing import Any, Dict
 
-from .pool import collect
-from .utils import dup_filter
 from .https import playlist_data
 from .patterns import _PlaylistPatterns as Patterns
+from .pool import collect
+from .utils import dup_filter
 
 
 class Playlist:

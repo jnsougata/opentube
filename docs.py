@@ -1,13 +1,13 @@
 import re
+
 import vitedoc
 from vitedoc import Action, Feature
-
 
 version = ""
 with open("opentube/__init__.py") as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)  # type: ignore
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     vitedoc.init(
         base_dir="docs",
         title="OpenTube",
@@ -29,12 +29,12 @@ if __name__ == '__main__':
                 icon_emoji="🔑",
                 title="No API Key Required",
                 details="Access YouTube public data without the need for an API key, making it easier "
-                        "to integrate into your applications."
+                "to integrate into your applications.",
             ),
             Feature(
                 icon_emoji="🧩",
                 title="Comprehensive Data Access",
-                details="Retrieve a wide range of YouTube channel information, including metadata, playlists, and video details."
-            )
-        ]
+                details="Retrieve a wide range of YouTube channel information, including metadata, playlists, and video details.",
+            ),
+        ],
     )

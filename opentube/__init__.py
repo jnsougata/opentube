@@ -9,9 +9,9 @@ __author__ = "Sougata Jana"
 __version__ = "1.7.4"
 __url__ = "https://github.com/jnsougata/opentube"
 
-from .errors import *
-from .video import Video
-from .query import Search
-from .extras import Extras
 from .channel import Channel
+from .errors import *
+from .extras import Extras
 from .playlist import Playlist
+from .query import Search
+from .video import Video

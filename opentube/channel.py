@@ -1,13 +1,8 @@
 import re
-from typing import List, Optional, Dict, Any
+from typing import Any, Dict, List, Optional
 
-from .https import (
-    channel_about,
-    streams_data,
-    uploads_data,
-    channel_playlists,
-    upcoming_videos, shorts_data,
-)
+from .https import (channel_about, channel_playlists, shorts_data,
+                    streams_data, upcoming_videos, uploads_data)
 from .patterns import _ChannelPatterns as Patterns
 from .utils import dup_filter, extract_initial_data
 
@@ -42,24 +37,27 @@ class Channel:
         self.__html = channel_about(self._target_url)
         self.__obj = extract_initial_data(self.__html)
         self.__meta = self.__obj["metadata"]["channelMetadataRenderer"]
-        self.__detailed_meta = (
-            self.__obj
-            ["onResponseReceivedEndpoints"]
-            [0]
-            ["showEngagementPanelEndpoint"]
-            ["engagementPanel"]
-            ["engagementPanelSectionListRenderer"]
-            ["content"]
-            ["sectionListRenderer"]
-            ["contents"]
-            [0]
-            ["itemSectionRenderer"]
-            ["contents"]
-            [0]
-            ["aboutChannelRenderer"]
-            ["metadata"]
-            ["aboutChannelViewModel"]
-        )
+        self.__detailed_meta = self.__obj["onResponseReceivedEndpoints"][0][
+            "showEngagementPanelEndpoint"
+        ]["engagementPanel"]["engagementPanelSectionListRenderer"]["content"][
+            "sectionListRenderer"
+        ][
+            "contents"
+        ][
+            0
+        ][
+            "itemSectionRenderer"
+        ][
+            "contents"
+        ][
+            0
+        ][
+            "aboutChannelRenderer"
+        ][
+            "metadata"
+        ][
+            "aboutChannelViewModel"
+        ]
 
     @property
     def id(self) -> str:
@@ -109,7 +107,9 @@ class Channel:
         Returns:
             str: The total number of views the channel got across all videos.
         """
-        return self.__detailed_meta["viewCountText"].replace(" views", "").replace(",", "")
+        return (
+            self.__detailed_meta["viewCountText"].replace(" views", "").replace(",", "")
+        )
 
     @property
     def country(self) -> Optional[str]:
@@ -148,7 +148,17 @@ class Channel:
                     "avatar": {"avatarViewModel": {"image": {"sources": []}}}
                 }
             },
-        )["decoratedAvatarViewModel"]["avatar"]["avatarViewModel"]["image"]["sources"]
+        )[
+            "decoratedAvatarViewModel"
+        ][
+            "avatar"
+        ][
+            "avatarViewModel"
+        ][
+            "image"
+        ][
+            "sources"
+        ]
 
     @property
     def banners(self) -> List[Dict[str, Any]]:
@@ -160,14 +170,13 @@ class Channel:
         """
         return self.__obj["header"]["pageHeaderRenderer"]["content"][
             "pageHeaderViewModel"
-        ].get(
-            "banner",
-            {
-                "imageBannerViewModel": {
-                    "image": {"sources": []}
-                }
-            }
-        )["imageBannerViewModel"]["image"]["sources"]
+        ].get("banner", {"imageBannerViewModel": {"image": {"sources": []}}})[
+            "imageBannerViewModel"
+        ][
+            "image"
+        ][
+            "sources"
+        ]
 
     @property
     def rss_url(self) -> str:
@@ -209,9 +218,7 @@ class Channel:
         Returns:
             str: The date of creation of the channel.
         """
-        return self.__detailed_meta["joinedDateText"]["content"].replace(
-            "Joined ", ""
-        )
+        return self.__detailed_meta["joinedDateText"]["content"].replace("Joined ", "")
 
     @property
     def socials(self) -> List[str]:
@@ -300,7 +307,10 @@ class Channel:
         #     ["clientResource"]
         #     ["imageName"]
         # ) == "CHECK_CIRCLE_FILLED"
-        return "'metadataBadgeRenderer': {'icon': {'iconType': 'CHECK_CIRCLE_THICK'}" in str(self.__obj)
+        return (
+            "'metadataBadgeRenderer': {'icon': {'iconType': 'CHECK_CIRCLE_THICK'}"
+            in str(self.__obj)
+        )
 
     @property
     def live(self) -> bool:
@@ -361,7 +371,7 @@ class Channel:
             "family_safe": self.family_safe,
             "available_country_codes": self.available_country_codes,
             "verified": self.verified,
-            "live": self.live
+            "live": self.live,
         }
 
     @property
@@ -379,7 +389,7 @@ class Channel:
         return [
             id_
             for id_ in filtered_ids
-            if f'vi/{id_}/hqdefault_live.jpg' in streams_data(raw)
+            if f"vi/{id_}/hqdefault_live.jpg" in streams_data(raw)
         ]
 
     @property
@@ -418,13 +428,9 @@ class Channel:
         """
         try:
             initial_data = extract_initial_data(shorts_data(self._target_url))
-            shorts = (
-                initial_data
-                ["contents"]
-                ["twoColumnBrowseResultsRenderer"]
-                ["tabs"][2]["tabRenderer"]["content"]
-                ["richGridRenderer"]["contents"]
-            )
+            shorts = initial_data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][
+                2
+            ]["tabRenderer"]["content"]["richGridRenderer"]["contents"]
         except KeyError:
             return None
         data = {}
@@ -432,13 +438,17 @@ class Channel:
             if not raw_short.get("richItemRenderer"):
                 continue
             short = raw_short["richItemRenderer"]["content"]["shortsLockupViewModel"]
-            thumbnail = short["thumbnailViewModel"]["thumbnailViewModel"]["image"]["sources"][0]
+            thumbnail = short["thumbnailViewModel"]["thumbnailViewModel"]["image"][
+                "sources"
+            ][0]
             video_id = thumbnail["url"].split("/vi/")[1].split("/")[0]
             data[video_id] = {
                 "id": video_id,
                 "url": "https://www.youtube.com/shorts/" + video_id,
                 "title": short["overlayMetadata"]["primaryText"]["content"],
-                "views": short["overlayMetadata"]["secondaryText"]["content"].replace(" views", "").replace(",", ""),
+                "views": short["overlayMetadata"]["secondaryText"]["content"]
+                .replace(" views", "")
+                .replace(",", ""),
                 "thumbnail": thumbnail,
             }
         return data
@@ -452,13 +462,9 @@ class Channel:
         """
         try:
             initial_data = extract_initial_data(uploads_data(self._target_url))
-            videos = (
-                initial_data
-                ["contents"]
-                ["twoColumnBrowseResultsRenderer"]
-                ["tabs"][1]["tabRenderer"]["content"]
-                ["richGridRenderer"]["contents"]
-            )
+            videos = initial_data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][
+                1
+            ]["tabRenderer"]["content"]["richGridRenderer"]["contents"]
         except KeyError:
             return None
         data = {}
@@ -471,8 +477,13 @@ class Channel:
                 "title": v["title"]["runs"][0]["text"],
                 "id": video_id,
                 "url": "https://www.youtube.com/watch?v=" + video_id,
-                "description": v.get("descriptionSnippet", {}).get("runs", [{}])[0].get("text", ""),
-                "views": v.get("viewCountText", {}).get("simpleText", "0").replace(" views", "").replace(",", ""),
+                "description": v.get("descriptionSnippet", {})
+                .get("runs", [{}])[0]
+                .get("text", ""),
+                "views": v.get("viewCountText", {})
+                .get("simpleText", "0")
+                .replace(" views", "")
+                .replace(",", ""),
                 "published": v.get("publishedTimeText", {}).get("simpleText", ""),
                 "duration": v.get("lengthText", {}).get("simpleText", ""),
                 "thumbnails": v["thumbnail"]["thumbnails"],
@@ -511,16 +522,29 @@ class Channel:
         """
         model = raw["lockupViewModel"]
         video_count_text = None
-        overlays = model["contentImage"]["collectionThumbnailViewModel"]["primaryThumbnail"]["thumbnailViewModel"]["overlays"]
+        overlays = model["contentImage"]["collectionThumbnailViewModel"][
+            "primaryThumbnail"
+        ]["thumbnailViewModel"]["overlays"]
         for overlay in overlays:
-            if overlay["thumbnailOverlayBadgeViewModel"]["thumbnailBadges"][0]["thumbnailBadgeViewModel"]["badgeStyle"] == "THUMBNAIL_OVERLAY_BADGE_STYLE_DEFAULT":
-                video_count_text = overlay["thumbnailOverlayBadgeViewModel"]["thumbnailBadges"][0]["thumbnailBadgeViewModel"]["text"]
+            if (
+                overlay["thumbnailOverlayBadgeViewModel"]["thumbnailBadges"][0][
+                    "thumbnailBadgeViewModel"
+                ]["badgeStyle"]
+                == "THUMBNAIL_OVERLAY_BADGE_STYLE_DEFAULT"
+            ):
+                video_count_text = overlay["thumbnailOverlayBadgeViewModel"][
+                    "thumbnailBadges"
+                ][0]["thumbnailBadgeViewModel"]["text"]
                 break
         return {
             "id": model["contentId"],
             "title": model["metadata"]["lockupMetadataViewModel"]["title"]["content"],
-            "video_count": video_count_text.replace(" videos", "") if video_count_text else "0",
-            "thumbnail": model["contentImage"]["collectionThumbnailViewModel"]["primaryThumbnail"]["thumbnailViewModel"]["image"]["sources"][0],
+            "video_count": (
+                video_count_text.replace(" videos", "") if video_count_text else "0"
+            ),
+            "thumbnail": model["contentImage"]["collectionThumbnailViewModel"][
+                "primaryThumbnail"
+            ]["thumbnailViewModel"]["image"]["sources"][0],
             "url": "https://www.youtube.com/playlist?list=" + model["contentId"],
         }
 
@@ -531,8 +555,9 @@ class Channel:
         Returns:
             List[Dict[str, Any]] | None: The basic metadata of all playlists or None.
         """
-        obj = extract_initial_data(
-            channel_playlists(self._target_url))["contents"]["twoColumnBrowseResultsRenderer"]["tabs"]
+        obj = extract_initial_data(channel_playlists(self._target_url))["contents"][
+            "twoColumnBrowseResultsRenderer"
+        ]["tabs"]
         playlist_tab = None
         for tab in obj:
             if not tab.get("tabRenderer"):
@@ -542,9 +567,7 @@ class Channel:
                 break
         if not playlist_tab:
             return None
-        raw_playlists = (
-            playlist_tab
-            ["tabRenderer"]["content"]["sectionListRenderer"]["contents"][0]
-            ["itemSectionRenderer"]["contents"][0]["gridRenderer"]["items"]
-        )
+        raw_playlists = playlist_tab["tabRenderer"]["content"]["sectionListRenderer"][
+            "contents"
+        ][0]["itemSectionRenderer"]["contents"][0]["gridRenderer"]["items"]
         return [self.__format_playlist_data(item) for item in raw_playlists]
