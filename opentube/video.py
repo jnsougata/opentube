@@ -1,3 +1,4 @@
+import json
 import re
 from typing import Any, Dict, List, Optional
 
@@ -5,22 +6,23 @@ from .https import video_data
 from .utils import extract_initial_data
 
 
+# noinspection shadowing-builtins
 class Video:
 
     _HEAD = "https://www.youtube.com/watch?v="
 
-    def __init__(self, video_id: str):
+    def __init__(self, id: str):
         """
         Represents a YouTube video.
 
         args:
-            video_id (str): The id or url of the video.
+            id (str): The id or url of the video.
         """
         pattern = re.compile(r".be/(.*?)$|=(.*?)$|^(\w{11})$")
         self._matched_id = (
-            pattern.search(video_id).group(1)
-            or pattern.search(video_id).group(2)
-            or pattern.search(video_id).group(3)
+            pattern.search(id).group(1)
+            or pattern.search(id).group(2)
+            or pattern.search(id).group(3)
         )
         if self._matched_id:
             self._url = self._HEAD + self._matched_id
