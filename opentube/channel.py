@@ -271,42 +271,6 @@ class Channel:
         Returns:
             bool: True if the channel is verified, False otherwise
         """
-        # return (
-        #     self.__obj
-        #     ["header"]
-        #     ["pageHeaderRenderer"]
-        #     ["content"]
-        #     ["pageHeaderViewModel"]
-        #     ["title"]
-        #     ["dynamicTextViewModel"]
-        #     ["text"].get(
-        #         "attachmentRuns",
-        #         [
-        #             {
-        #                 "element": {
-        #                     "type": {
-        #                         "imageType": {
-        #                             "image": {
-        #                                 "sources": [
-        #                                     {"clientResource": {"imageName": "_"}}
-        #                                 ]
-        #                             }
-        #                         }
-        #                     }
-        #                 }
-        #             }
-        #         ],
-        #     )
-        #     [0]
-        #     ["element"]
-        #     ["type"]
-        #     ["imageType"]
-        #     ["image"]
-        #     ["sources"]
-        #     [0]
-        #     ["clientResource"]
-        #     ["imageName"]
-        # ) == "CHECK_CIRCLE_FILLED"
         return (
             "'metadataBadgeRenderer': {'icon': {'iconType': 'CHECK_CIRCLE_THICK'}"
             in str(self.__obj)
@@ -460,6 +424,7 @@ class Channel:
         Returns:
             Dict[str, Any] | None: A dict containing basic metadata of uploaded videos or None.
         """
+        # TODO: FIX IT
         try:
             initial_data = extract_initial_data(uploads_data(self._target_url))
             videos = initial_data["contents"]["twoColumnBrowseResultsRenderer"]["tabs"][
@@ -498,6 +463,7 @@ class Channel:
         Returns:
             Dict[str, Any] | None: The id of the last uploaded video or None.
         """
+        # TODO: FIX IT
         videos = self.videos()
         return list(videos.values())[0] if videos else None
 
