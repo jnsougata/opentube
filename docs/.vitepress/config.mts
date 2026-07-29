@@ -66,6 +66,10 @@ export default defineConfig({
                 "link": "/guide/1.7.4/query"
             },
             {
+                "text": "Shorts",
+                "link": "/guide/1.7.4/shorts"
+            },
+            {
                 "text": "Stream",
                 "link": "/guide/1.7.4/stream"
             },

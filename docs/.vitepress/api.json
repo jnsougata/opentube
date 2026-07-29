@@ -461,6 +461,64 @@
       },
       "functions": {}
     },
+    "opentube.shorts": {
+      "name": "opentube.shorts",
+      "docstring": null,
+      "classes": {
+        "Short": {
+          "name": "Short",
+          "qualified_name": "opentube.shorts.Short",
+          "docstring": "Represents a YouTube Short video and provides methods to extract its metadata.",
+          "bases": [],
+          "properties": {
+            "author": {
+              "docstring": "Returns the author of the short video.\n\nReturns:\n    Dict[str, str]: Author of the short video."
+            },
+            "title": {
+              "docstring": "Returns the title of the short video.\n\nReturns:\n    str: Title of the short video."
+            },
+            "description": {
+              "docstring": "Returns the description of the short video.\n\nReturns:\n    str: Description of the short video."
+            },
+            "thumbnail": {
+              "docstring": "Returns the thumbnail of the short video.\n\nReturns:\n    str: Thumbnail url of the short video."
+            },
+            "date": {
+              "docstring": "Returns the date of publishing of the short video.\n\nReturns:\n    str: Date of publishing of the short video."
+            },
+            "regions_allowed": {
+              "docstring": "Returns the regions allowed for the short video.\n\nReturns:\n    List[str]: List of regions allowed for the short video."
+            },
+            "genre": {
+              "docstring": "Returns the genre of the short video.\n\nReturns:\n    str: Genre of the short video."
+            },
+            "views": {
+              "docstring": "Returns the view count of the short video.\n\nReturns:\n    int: View count of the short video."
+            },
+            "likes": {
+              "docstring": "Returns the likes count of the short video.\n\nReturns:\n    str: Likes count of the short video."
+            }
+          },
+          "methods": {}
+        }
+      },
+      "functions": {
+        "_extract_itemprop": {
+          "name": "_extract_itemprop",
+          "qualified_name": "opentube.shorts._extract_itemprop",
+          "signature": "(prop: str, source: str, tag: str = 'meta')",
+          "async": false,
+          "docstring": null
+        },
+        "_extract_og": {
+          "name": "_extract_og",
+          "qualified_name": "opentube.shorts._extract_og",
+          "signature": "(prop: str, source: str)",
+          "async": false,
+          "docstring": null
+        }
+      }
+    },
     "opentube.stream": {
       "name": "opentube.stream",
       "docstring": null,
@@ -502,7 +560,7 @@
         "request": {
           "name": "request",
           "qualified_name": "opentube.utils.request",
-          "signature": "(url: str) -> Any | None",
+          "signature": "(url: str)",
           "async": false,
           "docstring": "The base function for making a request with proper headers.\n\nArgs:\n    url (str): The url to make a request."
         }
@@ -565,10 +623,10 @@
     }
   },
   "summary": {
-    "modules": 12,
-    "classes": 14,
-    "functions": 22,
+    "modules": 13,
+    "classes": 15,
+    "functions": 24,
     "methods": 16,
-    "properties": 40
+    "properties": 49
   }
 }

@@ -53,7 +53,7 @@ Utility function for extracting the initial data from the HTML of a YouTube page
 ### Signature
 
 ```python
-request(url: str) -> Any | None
+request(url: str)
 ```
 
 The base function for making a request with proper headers.
