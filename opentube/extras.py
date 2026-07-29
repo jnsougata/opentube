@@ -1,8 +1,14 @@
 from typing import List, Optional
 
-from .https import (_get_trending_learning_videos, trending_feeds,
-                    trending_games, trending_songs, trending_sports,
-                    trending_streams, trending_videos)
+from .https import (
+    _get_trending_learning_videos,
+    trending_feeds,
+    trending_games,
+    trending_songs,
+    trending_sports,
+    trending_streams,
+    trending_videos,
+)
 from .patterns import _ExtraPatterns as Patterns
 from .utils import dup_filter
 

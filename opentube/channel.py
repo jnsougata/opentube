@@ -1,8 +1,14 @@
 import re
 from typing import Any, Dict, List, Optional
 
-from .https import (channel_about, channel_playlists, shorts_data,
-                    streams_data, upcoming_videos, uploads_data)
+from .https import (
+    channel_about,
+    channel_playlists,
+    shorts_data,
+    streams_data,
+    upcoming_videos,
+    uploads_data,
+)
 from .patterns import _ChannelPatterns as Patterns
 from .utils import dup_filter, extract_initial_data
 

@@ -10,7 +10,7 @@ from .errors import InvalidURL, RequestError, TooManyRequests
 __all__ = ["dup_filter", "request", "extract_initial_data"]
 
 
-def request(url: str) -> Any | None:
+def request(url: str):
     """
     The base function for making a request with proper headers.
 

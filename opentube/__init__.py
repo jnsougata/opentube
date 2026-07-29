@@ -14,4 +14,5 @@ from .errors import *
 from .extras import Extras
 from .playlist import Playlist
 from .query import Search
+from .shorts import Short
 from .video import Video
